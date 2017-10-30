@@ -27,7 +27,7 @@ function randNumGen() {
   var max = imageArr.length - 1;
   var randNum = Math.floor(Math.random() * (max - min) + 1);
   while (randNum === prevOne || randNum === prevTwo || randNum === prevThree) {
-    randNum = Math.floor(Math.random() * imageArr.length);
+    randNum = Math.floor(Math.random() * (max - min) + 1);
   }
   console.log('random number', randNum);
   return randNum;
@@ -58,10 +58,12 @@ function loadImage() {
     imgObjArr[imgOne].imageClicked++;
     imgObjArr[imgTwo].imageClicked++;
     imgObjArr[imgThree].imageClicked++;
-    var webEl = document.getElementById('images');
-    for (var k = 0; k < webArr.length; k ++) {
-      webEl.innerHTML = '<li><img src="' + imgObjArr[k].path + '"></li>';
-    }
+    var webListOne = document.getElementById('img-one');
+    webListOne.innerHTML = '<img src="' + webArr[0].path + '">';
+    var webListTwo = document.getElementById('img-two');
+    webListTwo.innerHTML = '<img src="' + webArr[1].path + '">';
+    var webListThree = document.getElementById('img-three');
+    webListThree.innerHTML = '<img src="' + webArr[2].path + '">';
   }
-};
+}
 loadImage();
