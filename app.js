@@ -64,17 +64,24 @@ function loadImage() {
   webListOne.innerHTML = '<img src="' + webArr[0].path + '">';
   webListTwo.innerHTML = '<img src="' + webArr[1].path + '">';
   webListThree.innerHTML = '<img src="' + webArr[2].path + '">';
-
+  totalClicks++;
+  console.log('total clicks', totalClicks);
+  console.log('img 1 shown', imgObjArr[imgOne].imageShown);
+  console.log('img 2 shown', imgObjArr[imgTwo].imageShown);
+  console.log('img 3 shown', imgObjArr[imgThree].imageShown);
 }
 function clickOnImage(event) {
   console.log(event.target);
-  loadImage();
-  totalClicks++;
+  if (totalClicks < 26) {
+    loadImage();
+  } else {
+    alert('That\s the end our research, thank you for your participation!');
+  }
 }
 
 
 loadImage();
-console.log('total clicks', totalClicks);
-webListOne.addEventListener('click', loadImage);
-webListTwo.addEventListener('click', loadImage);
-webListThree.addEventListener('click', loadImage);
+
+webListOne.addEventListener('click', clickOnImage);
+webListTwo.addEventListener('click', clickOnImage);
+webListThree.addEventListener('click', clickOnImage);
