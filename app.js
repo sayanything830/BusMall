@@ -10,6 +10,10 @@ var imgThree;
 var prevOne;
 var prevTwo;
 var prevThree;
+var totalClicks = 0;
+var webListOne = document.getElementById('img-one');
+var webListTwo = document.getElementById('img-two');
+var webListThree = document.getElementById('img-three');
 
 function ImageArrToObject(name) {
   this.name = name;
@@ -29,7 +33,7 @@ function randNumGen() {
   while (randNum === prevOne || randNum === prevTwo || randNum === prevThree) {
     randNum = Math.floor(Math.random() * (max - min) + 1);
   }
-  console.log('random number', randNum);
+  //console.log('random number', randNum);
   return randNum;
 };
 
@@ -49,26 +53,28 @@ function compareImg() {
 };
 
 function loadImage() {
-  for (var j = 0; j < 25; j ++) {
-    compareImg();
-    var webArr = [];
-    webArr.push(imgObjArr[imgOne]);
-    webArr.push(imgObjArr[imgTwo]);
-    webArr.push(imgObjArr[imgThree]);
-    imgObjArr[imgOne].imageShown++;
-    imgObjArr[imgTwo].imageShown++;
-    imgObjArr[imgThree].imageShown++;
-    webListOne.innerHTML = '<img src="' + webArr[0].path + '">';
-    webListTwo.innerHTML = '<img src="' + webArr[1].path + '">';
-    webListThree.innerHTML = '<img src="' + webArr[2].path + '">';
-  }
-}
-var webListOne = document.getElementById('img-one');
-var webListTwo = document.getElementById('img-two');
-var webListThree = document.getElementById('img-three');
-loadImage();
+  compareImg();
+  var webArr = [];
+  webArr.push(imgObjArr[imgOne]);
+  webArr.push(imgObjArr[imgTwo]);
+  webArr.push(imgObjArr[imgThree]);
+  imgObjArr[imgOne].imageShown++;
+  imgObjArr[imgTwo].imageShown++;
+  imgObjArr[imgThree].imageShown++;
+  webListOne.innerHTML = '<img src="' + webArr[0].path + '">';
+  webListTwo.innerHTML = '<img src="' + webArr[1].path + '">';
+  webListThree.innerHTML = '<img src="' + webArr[2].path + '">';
 
-// function clickOnImage () {
-//   loadImage();
-//   ImageArrToObject.imageClicked++;
-// }
+}
+function clickOnImage(event) {
+  console.log(event.target);
+  loadImage();
+  totalClicks++;
+}
+
+
+loadImage();
+console.log('total clicks', totalClicks);
+webListOne.addEventListener('click', loadImage);
+webListTwo.addEventListener('click', loadImage);
+webListThree.addEventListener('click', loadImage);
