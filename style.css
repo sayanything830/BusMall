@@ -1,0 +1,25 @@
+body {
+  width: 960px;
+  margin: 0 auto;
+  font-family: helvetica;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-size: 30px;
+  color: #444;
+}
+
+li {
+  float: left;
+  margin-left: 10px;
+  border-radius: 3px;
+  border-color: #444;
+}
+
+ul#tally li {
+  clear:both;
+  padding-top: 10px;
+}
