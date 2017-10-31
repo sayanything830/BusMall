@@ -1,7 +1,7 @@
 'use strict';
 
 var imageArr = [
-  'bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'
+  'bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.jpg', 'water-can.jpg', 'wine-glass.jpg'
 ];
 var imgObjArr = [];
 var imgOne;
@@ -55,15 +55,20 @@ function loadImage() {
     webArr.push(imgObjArr[imgOne]);
     webArr.push(imgObjArr[imgTwo]);
     webArr.push(imgObjArr[imgThree]);
-    imgObjArr[imgOne].imageClicked++;
-    imgObjArr[imgTwo].imageClicked++;
-    imgObjArr[imgThree].imageClicked++;
-    var webListOne = document.getElementById('img-one');
+    imgObjArr[imgOne].imageShown++;
+    imgObjArr[imgTwo].imageShown++;
+    imgObjArr[imgThree].imageShown++;
     webListOne.innerHTML = '<img src="' + webArr[0].path + '">';
-    var webListTwo = document.getElementById('img-two');
     webListTwo.innerHTML = '<img src="' + webArr[1].path + '">';
-    var webListThree = document.getElementById('img-three');
     webListThree.innerHTML = '<img src="' + webArr[2].path + '">';
   }
 }
+var webListOne = document.getElementById('img-one');
+var webListTwo = document.getElementById('img-two');
+var webListThree = document.getElementById('img-three');
 loadImage();
+
+// function clickOnImage () {
+//   loadImage();
+//   ImageArrToObject.imageClicked++;
+// }
