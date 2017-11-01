@@ -16,6 +16,10 @@ var webListTwo = document.getElementById('img-two'); //second list item
 var webListThree = document.getElementById('img-three'); //third list item
 //var finalHeading = document.getElementById('final');
 var tally = document.getElementById('tally'); //lists image totals at the end of 25 selections
+//*** Arrays to place in chart labels and data ***
+var imageName = [];
+var shown = [];
+var clicked = [];
 
 function ImageArrToObject(name) { //turns images into objects with specific key value pairs
   this.name = name;
@@ -78,7 +82,14 @@ function loadImage() { //this function assigns the image to a specified list ite
   //console.log(displayArr[0]);
 }
 loadImage(); //calls initial images to load
-
+console.log('total stored clicks', localStorage.totalClicks);
+if (localStorage.totalClicks == 25) {
+  imgObjArr = JSON.parse(localStorage.saveImgObjArr);
+  objNameToArr();
+  objShownToArr();
+  objClickToArr();
+  drawChart();
+}
 
 function clickOnImage(event) { //event handler function that tells page to pull up new images until total clicks has reached 25
   console.log(event.target.id);
@@ -87,6 +98,7 @@ function clickOnImage(event) { //event handler function that tells page to pull 
   if (totalClicks < 26) { //total clicks starts at one once first page is loaded, so 26-1=25
     loadImage();//keep runing function
   } else { //after 25 clicks...
+    localStorage.totalClicks = 25;
     displayTotals();
     function displayTotals(){ //turns each image object into a list item diplaying total times each one is shown and how many times it was clicked on
       var imgTotals = '';
@@ -94,6 +106,7 @@ function clickOnImage(event) { //event handler function that tells page to pull 
         imgTotals = imgTotals + '<li>' + imgObjArr[j].name + ' shown ' + imgObjArr[j].imageShown + ' times and selected ' + imgObjArr[j].imageClicked + ' times.</li>';
       }
       tally.innerHTML = imgTotals; //adds to list in DOM
+      //*** stop event listeners ***
       webListOne.removeEventListener('click', clickOnImage);
       webListTwo.removeEventListener('click', clickOnImage);
       webListThree.removeEventListener('click', clickOnImage);
@@ -104,43 +117,40 @@ function clickOnImage(event) { //event handler function that tells page to pull 
       objShownToArr();
       objClickToArr();
       //This is where I add a chart
-      var ctx = document.getElementById('myChart').getContext('2d');
-      var chartTotals = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: imageName,
-          datasets: [
-            {
-              label: 'How many times an image was shown',
-              backgroundColor: 'rgb(255, 99, 132)',
-              data: shown
-            },
-            {
-              label: 'How many times an image was clicked',
-              backgroundColor: 'rgb(0, 110, 242)',
-              data: clicked
-            }
-          ]
-        },
-        options: {
-          title: {
-            display: true,
-            text: 'Images Clicked vs. Shown'
-          }
-        }
-      });
+      drawChart();
 
     }
-    //*** Reseting chart tables ***
-    imageName = []; //resets the chart tables
-    shown = [];
-    clicked = [];
   }
 }
-//*** Arrays to place in chart labels and data ***
-var imageName = [];
-var shown = [];
-var clicked = [];
+
+function drawChart () {
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chartTotals = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: imageName,
+      datasets: [
+        {
+          label: 'How many times an image was shown',
+          backgroundColor: 'rgb(255, 99, 132)',
+          data: shown
+        },
+        {
+          label: 'How many times an image was clicked',
+          backgroundColor: 'rgb(0, 110, 242)',
+          data: clicked
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Images Clicked vs. Shown'
+      }
+    }
+  });
+}
+
 
 //*** chart data functions ***
 function objNameToArr () {
@@ -165,20 +175,11 @@ webListOne.addEventListener('click', clickOnImage);
 webListTwo.addEventListener('click', clickOnImage);
 webListThree.addEventListener('click', clickOnImage);
 
-if (localStorage.saveImgObjArr) {
-  var saveImgObjArr = localStorage.saveImgObjArr.split('^,');
-} else var saveImgObjArr = [];
-
+var saveImgObjArr = [];
 //*** adding local storage save function ***
 function save () {
   if (saveImgObjArr = []) {
-    for (var d = 0; d < imgObjArr.length; d++) {
-      if (d === imgObjArr.length - 1) {
-        saveImgObjArr.push(JSON.stringify(imgObjArr[d]));
-        break;
-      }
-      saveImgObjArr.push(JSON.stringify(imgObjArr[d]) + '^');
-    }
+    saveImgObjArr.push(JSON.stringify(imgObjArr));
     localStorage.saveImgObjArr = saveImgObjArr;
   }
 }
@@ -186,10 +187,10 @@ function save () {
 //*** now local storage loading function for saved data ***
 function load () {
   if (localStorage.saveImgObjArr) {
-    for (var e = 0; e < saveImgObjArr.length; e++) {
-      JSON.parse(saveImgObjArr[e]);
-      imgObjArr[e] = saveImgObjArr[e];
-    }
+    saveImgObjArr = localStorage.saveImgObjArr.split(',');
+    saveImgObjArr = JSON.parse(saveImgObjArr);
+    //console.log(saveImgObjArr);
+    imgObjArr = saveImgObjArr;
   }
 }
 load();
