@@ -94,8 +94,11 @@ function clickOnImage(event) { //event handler function that tells page to pull 
         imgTotals = imgTotals + '<li>' + imgObjArr[j].name + ' shown ' + imgObjArr[j].imageShown + ' times and selected ' + imgObjArr[j].imageClicked + ' times.</li>';
       }
       tally.innerHTML = imgTotals; //adds to list in DOM
-
+      webListOne.removeEventListener('click', clickOnImage);
+      webListTwo.removeEventListener('click', clickOnImage);
+      webListThree.removeEventListener('click', clickOnImage);
       //*** adding local storage feature conditional ***
+      save();
       //*** calling chart data functions to turn objects into properties ***
       objNameToArr();
       objShownToArr();
@@ -163,7 +166,7 @@ webListTwo.addEventListener('click', clickOnImage);
 webListThree.addEventListener('click', clickOnImage);
 
 if (localStorage.saveImgObjArr) {
-  var saveImgObjArr = localStorage.saveImgObjArr.split('^,')
+  var saveImgObjArr = localStorage.saveImgObjArr.split('^,');
 } else var saveImgObjArr = [];
 
 //*** adding local storage save function ***
@@ -172,10 +175,11 @@ function save () {
     for (var d = 0; d < imgObjArr.length; d++) {
       if (d === imgObjArr.length - 1) {
         saveImgObjArr.push(JSON.stringify(imgObjArr[d]));
-      } else {
-        saveImgObjArr.push(JSON.stringify(imgObjArr[d] + '^'));
+        break;
       }
+      saveImgObjArr.push(JSON.stringify(imgObjArr[d]) + '^');
     }
+    localStorage.saveImgObjArr = saveImgObjArr;
   }
 }
 
@@ -184,9 +188,8 @@ function load () {
   if (localStorage.saveImgObjArr) {
     for (var e = 0; e < saveImgObjArr.length; e++) {
       JSON.parse(saveImgObjArr[e]);
-      imgObjArr[j] = saveImgObjArr[e];
+      imgObjArr[e] = saveImgObjArr[e];
     }
   }
 }
 load();
-save();
