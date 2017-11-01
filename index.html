@@ -3,24 +3,27 @@
   <head>
     <title>BusMall Image Selector</title>
     <link rel="stylesheet" href="reset.css">
-    <link rel="stylsheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
     <main>
-      <h1>Please select the image you like most</h1>
+      <h1>Please click on the image you like most</h1>
       <ul>
-        <li>
-          <img src="http://placehold.it/300x300">
+        <li id="img-one">
         </li>
-        <li>
-          <img src="http://placehold.it/300x300">
+        <li id="img-two">
         </li>
-        <li>
-          <img src="http://placehold.it/300x300">
+        <li id="img-three">
         </li>
       </ul>
+      <h2 id="final"></h2>
+      <ul id="tally">
+      </ul>
+      <canvas id="myChart"></canvas>
+      <canvas id="mySecondChart"></canvas>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
