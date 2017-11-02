@@ -82,8 +82,11 @@ function loadImage() { //this function assigns the image to a specified list ite
   //console.log(displayArr[0]);
 }
 loadImage(); //calls initial images to load
-console.log('total stored clicks', localStorage.totalClicks);
+//console.log('total stored clicks', localStorage.totalClicks);
 if (localStorage.totalClicks == 25) {
+  webListOne.removeEventListener('click', clickOnImage);
+  webListTwo.removeEventListener('click', clickOnImage);
+  webListThree.removeEventListener('click', clickOnImage);
   imgObjArr = JSON.parse(localStorage.saveImgObjArr);
   objNameToArr();
   objShownToArr();
@@ -122,7 +125,7 @@ function clickOnImage(event) { //event handler function that tells page to pull 
     }
   }
 }
-
+//*** function to draw chart ***
 function drawChart () {
   var ctx = document.getElementById('myChart').getContext('2d');
   var chartTotals = new Chart(ctx, {
