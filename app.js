@@ -21,6 +21,8 @@ var imageName = [];
 var shown = [];
 var clicked = [];
 var isInitial = true;
+var researchComplete = document.getElementById('finished');
+var start = document.getElementById('start');
 
 function ImageArrToObject(name) { //turns images into objects with specific key value pairs
   this.name = name;
@@ -62,6 +64,7 @@ function compareImg() { //compares each index number to make sure same image doe
 // var displayArr = [];
 function loadImage() { //this function assigns the image to a specified list item and displays in the DOM
   compareImg();
+  start.innerHTML = 'Please click on the image you like most';
   var webArr = [];
   webArr.push(imgObjArr[imgOne]); //pushes each image to an array
   webArr.push(imgObjArr[imgTwo]);
@@ -86,9 +89,14 @@ loadImage(); //calls initial images to load
 //console.log('total stored clicks', localStorage.totalClicks);
 if (localStorage.totalClicks == 25) {
   isInitial = false;
+  start.innerHTML = '';
+  researchComplete.innerHTML = 'Here are the results:';
   webListOne.removeEventListener('click', clickOnImage);
   webListTwo.removeEventListener('click', clickOnImage);
   webListThree.removeEventListener('click', clickOnImage);
+  webListOne.innerHTML = '';
+  webListTwo.innerHTML = '';
+  webListThree.innerHTML = '';
   imgObjArr = JSON.parse(localStorage.saveImgObjArr);
   objNameToArr();
   objShownToArr();
@@ -108,12 +116,16 @@ function clickOnImage(event) { //event handler function that tells page to pull 
   } else { //after 25 clicks...
     localStorage.totalClicks = 25;
     displayTotals();
+    webListOne.innerHTML = '';
+    webListTwo.innerHTML = '';
+    webListThree.innerHTML = '';
     function displayTotals(){ //turns each image object into a list item diplaying total times each one is shown and how many times it was clicked on
       var imgTotals = '';
       for (var j = 0; j < imageArr.length; j++) {
         imgTotals = imgTotals + '<li>' + imgObjArr[j].name + ' shown ' + imgObjArr[j].imageShown + ' times and selected ' + imgObjArr[j].imageClicked + ' times.</li>';
       }
-      tally.innerHTML = imgTotals; //adds to list in DOM
+      start.innerHTML = '';
+      researchComplete.innerHTML = 'Thank you for participation, here are the results:';
       //*** stop event listeners ***
       webListOne.removeEventListener('click', clickOnImage);
       webListTwo.removeEventListener('click', clickOnImage);
@@ -126,7 +138,7 @@ function clickOnImage(event) { //event handler function that tells page to pull 
       objClickToArr();
       //This is where I add a chart
       drawChart();
-
+      tally.innerHTML = imgTotals; //adds to list in DOM
     }
   }
 }
