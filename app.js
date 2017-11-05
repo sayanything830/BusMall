@@ -20,6 +20,7 @@ var tally = document.getElementById('tally'); //lists image totals at the end of
 var imageName = [];
 var shown = [];
 var clicked = [];
+var isInitial = true;
 
 function ImageArrToObject(name) { //turns images into objects with specific key value pairs
   this.name = name;
@@ -84,6 +85,7 @@ function loadImage() { //this function assigns the image to a specified list ite
 loadImage(); //calls initial images to load
 //console.log('total stored clicks', localStorage.totalClicks);
 if (localStorage.totalClicks == 25) {
+  isInitial = false;
   webListOne.removeEventListener('click', clickOnImage);
   webListTwo.removeEventListener('click', clickOnImage);
   webListThree.removeEventListener('click', clickOnImage);
@@ -95,6 +97,9 @@ if (localStorage.totalClicks == 25) {
 }
 
 function clickOnImage(event) { //event handler function that tells page to pull up new images until total clicks has reached 25
+  if (!isInitial) {
+    return;
+  }
   console.log(event.target.id);
   var k = event.target.id;
   imgObjArr[k].imageClicked++;
