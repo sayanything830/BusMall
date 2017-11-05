@@ -8,8 +8,9 @@
 
   <body>
     <main>
-      <h1>Please click on the image you like most</h1>
-      <ul>
+      <h1 id="start"></h1>
+      <h1 id="finished"></h1>
+      <ul class="images">
         <li id="img-one">
         </li>
         <li id="img-two">
@@ -18,10 +19,9 @@
         </li>
       </ul>
       <h2 id="final"></h2>
+      <canvas id="myChart"></canvas>
       <ul id="tally">
       </ul>
-      <canvas id="myChart"></canvas>
-      <canvas id="mySecondChart"></canvas>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="app.js"></script>
